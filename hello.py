@@ -4,7 +4,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    # Trả về file index.html nằm cùng thư mục
     return send_file("index.html")
 
 @app.route("/submit", methods=["POST"])
@@ -12,14 +11,12 @@ def submit():
     code = request.form.get("code")
     access = request.form.get("access")
 
-    # Kiểm tra mã truy cập
     if access != "123456":
         return render_template_string("""
           <h3 style="text-align:center;">⛔ Sai mã truy cập</h3>
           <p style="text-align:center;"><a href="/">← Thử lại</a></p>
         """)
 
-    # Ghi mã vào file
     with open("ma_da_nhap.txt", "a", encoding="utf-8") as f:
         f.write(f"{code}\n")
 
@@ -37,6 +34,5 @@ def submit():
     """)
 
 if __name__ == "__main__":
-    # Listen trên tất cả interface, port 5000
     app.run(host="0.0.0.0", port=5000)
 
